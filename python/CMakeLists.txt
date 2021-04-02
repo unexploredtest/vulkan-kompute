@@ -9,11 +9,5 @@ include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 target_link_libraries(
-    kp -lvulkan PRIVATE
+    kp -lvulkan PRIVATE kompute::kompute
     )
-
-target_link_libraries(
-    kp PRIVATE
-    kompute::kompute
-    )
-
