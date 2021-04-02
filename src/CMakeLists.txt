@@ -6,7 +6,8 @@ endif()
 # We don't import Vulkan library if Android build as its build dynamically
 # Otherwise it is expected that the Vulkan SDK and dependencies are installed 
 if(NOT KOMPUTE_OPT_ANDOID_BUILD)
-    add_library(Vulkan-Headers INTERFACE PATH VULKAN_SDK/)
+    # For Vulkan Headers
+    include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
 endif()
 
 if(KOMPUTE_OPT_BUILD_SHADERS)
