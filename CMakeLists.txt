@@ -30,6 +30,9 @@ set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, se
 include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
+# For python headers
+include_directories(PYTHON_INCLUDE_DIR)
+
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
     set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Enables external fmt as its current dep" FORCE)
