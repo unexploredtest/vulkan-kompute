@@ -28,6 +28,7 @@ set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, se
 
 # Adding vulkan headers and vulkan loader
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
+link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/Lib)
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
