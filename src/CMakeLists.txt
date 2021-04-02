@@ -6,8 +6,10 @@ endif()
 # We don't import Vulkan library if Android build as its build dynamically
 # Otherwise it is expected that the Vulkan SDK and dependencies are installed 
 if(NOT KOMPUTE_OPT_ANDOID_BUILD)
-    # For Vulkan Headers
+    # Adding Vulkan Headers 
     include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
+    # Adding Vulkan Loader
+    link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 endif()
 
 if(KOMPUTE_OPT_BUILD_SHADERS)
@@ -61,7 +63,7 @@ target_include_directories(
 if(NOT KOMPUTE_OPT_ANDOID_BUILD)
     target_link_libraries(
         kompute
-        Vulkan::Vulkan
+        -lvulkan
     )
 else()
     target_link_libraries(
