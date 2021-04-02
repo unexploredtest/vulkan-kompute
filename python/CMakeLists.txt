@@ -6,7 +6,7 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/single_include/)
 
 include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
-link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
+link_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/lib)
         
 target_link_libraries(
     kp PRIVATE
