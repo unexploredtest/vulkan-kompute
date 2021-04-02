@@ -12,13 +12,13 @@ jobs:
             cibw-arch: manylinux_x86_64
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_i686
-          - runs-on: macos-latest
-            cibw-arch: macosx_x86_64
-          - runs-on: macos-latest
-            cibw-arch: macosx_arm64
-          - runs-on: macos-latest
-            cibw-arch: macosx_universal2
-          - runs-on: windows-latest
+          # - runs-on: macos-latest
+          #   cibw-arch: macosx_x86_64
+          # - runs-on: macos-latest
+          #   cibw-arch: macosx_arm64
+          # - runs-on: macos-latest
+          #   cibw-arch: macosx_universal2
+          # - runs-on: windows-latest
             cibw-arch: win_amd64
           - runs-on: windows-latest
             cibw-arch: win32
@@ -41,6 +41,9 @@ jobs:
 
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.8
+
+      - name: Install Vulkan SDK
+        uses: humbletim/setup-vulkan-sdk@v1.0.1
 
       - name: Install requirements
         run: |
