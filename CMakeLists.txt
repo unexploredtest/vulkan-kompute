@@ -25,6 +25,8 @@ option(KOMPUTE_OPT_BUILD_AS_SHARED_LIB "Whether to build kompute as shared libra
 # Build flags
 set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, see docs for full list")
 
+include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
+
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
     set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Enables external fmt as its current dep" FORCE)
