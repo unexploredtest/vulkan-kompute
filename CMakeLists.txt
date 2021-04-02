@@ -31,7 +31,7 @@ include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 # For python headers
-include_directories(PYTHON_INCLUDE_DIR)
+include_directories(/opt/hostedtoolcache/Python/3.9.2/x64/include/python3.9)
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
