@@ -25,7 +25,10 @@ option(KOMPUTE_OPT_BUILD_AS_SHARED_LIB "Whether to build kompute as shared libra
 # Build flags
 set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, see docs for full list")
 
+
+# Adding vulkan headers and vulkan loader
 include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
+link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
