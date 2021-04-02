@@ -1,16 +1,8 @@
 
 if(KOMPUTE_OPT_ANDOID_BUILD)
     find_library(android android)
-endif()
+endif() 
 
-# We don't import Vulkan library if Android build as its build dynamically
-# Otherwise it is expected that the Vulkan SDK and dependencies are installed 
-if(NOT KOMPUTE_OPT_ANDOID_BUILD)
-    # Adding Vulkan Headers 
-    include_directories(${PROJECT_SOURCE_DIR}/VULKAN_SDK/include)
-    # Adding Vulkan Loader
-    link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
-endif()
 
 if(KOMPUTE_OPT_BUILD_SHADERS)
 # all shaders are compiled into cpp files
