@@ -7,7 +7,6 @@ include_directories(
 
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
-include_directories(/opt/hostedtoolcache/Python/3.9.2/x64/include/python3.9)
         
 target_link_libraries(
     kp PRIVATE
