@@ -9,8 +9,7 @@ include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 target_link_libraries(
-    kp PRIVATE
-    -lvulkan
+    kp -lvulkan PRIVATE
     )
 
 target_link_libraries(
