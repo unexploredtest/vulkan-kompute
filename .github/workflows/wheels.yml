@@ -54,6 +54,8 @@ jobs:
           CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
           CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
           echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
+          echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux_2_24" >> $GITHUB_ENV
+          echo "CIBW_MANYLINUX_I686_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_LINUX=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
