@@ -94,4 +94,5 @@ jobs:
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON --config Release" >> $GITHUB_ENV
       - name: Run cibuildwheel
         run: |
+          export LD_LIBRARY_PATH=${PWD}/VULKAN_SDK/lib
           cibuildwheel
