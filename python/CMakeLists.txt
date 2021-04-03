@@ -13,6 +13,6 @@ include_directories(
 #)
 
 target_link_libraries(
-    kp PRIVATE kompute::kompute PRIVATE vulkan
+    kp PRIVATE kompute::kompute INTERFACE vulkan
     )
 
