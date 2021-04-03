@@ -9,7 +9,7 @@ from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
 curr_dir = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(curr_dir, 'README.md')) as f:
+with open(os.path.join(curr_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 class CMakeExtension(Extension):
