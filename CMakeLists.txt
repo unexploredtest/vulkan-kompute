@@ -32,7 +32,6 @@ find_library(vulkan
     HINTS "${CMAKE_PREFIX_PATH}/VULKAN_SDK/lib"
 )
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
-#include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 #link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
