@@ -47,7 +47,7 @@ jobs:
         
       - name: inside VULKAN SDK
         run: |
-          ls -a VULKAN_SDK
+          ls VULKAN_SDK
 
       - name: Install requirements
         run: |
