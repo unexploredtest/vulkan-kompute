@@ -55,7 +55,6 @@ target_include_directories(
 if(NOT KOMPUTE_OPT_ANDOID_BUILD)
     target_link_libraries(
         kompute
-        vulkan
     )
 else()
     target_link_libraries(
