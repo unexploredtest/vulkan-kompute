@@ -44,6 +44,10 @@ jobs:
 
       - name: Install Vulkan SDK
         uses: humbletim/setup-vulkan-sdk@v1.0.1
+        
+      - name: inside VULKAN SDK
+        run: |
+          ls -a VULKAN_SDK
 
       - name: Install requirements
         run: |
