@@ -72,10 +72,6 @@ jobs:
           cd ../..
           rm -rf VULKAN_SDK/_build
 
-      - name: inside VULKAN SDK
-        run: |
-          ls VULKAN_SDK
-
       - name: Install requirements
         run: |
           python -m pip install cibuildwheel twine
