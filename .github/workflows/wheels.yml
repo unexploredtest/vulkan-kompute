@@ -55,7 +55,8 @@ jobs:
       - name: Install Vulkan SDK
         shell: bash
         run: |
-          mkdir /VULKAN_SDK
+          sudo mkdir /VULKAN_SDK
+          sudo chmod a+rw /VULKAN_SDK
           mkdir /VULKAN_SDK/_build
           project_dir=${PWD}
           cd /VULKAN_SDK/_build
