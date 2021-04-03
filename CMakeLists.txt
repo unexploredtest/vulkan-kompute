@@ -31,6 +31,7 @@ find_library(vulkan
     NAMES vulkan
     HINTS "${CMAKE_PREFIX_PATH}/VULKAN_SDK/lib"
 )
+include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 #include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 #link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 

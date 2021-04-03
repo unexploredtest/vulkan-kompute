@@ -5,7 +5,7 @@ pybind11_add_module(kp src/main.cpp)
 include_directories(
         ${PROJECT_SOURCE_DIR}/single_include/)
 
-#include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
+include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 #link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 find_library(VULKAN_SDK
     NAMES vulkan
