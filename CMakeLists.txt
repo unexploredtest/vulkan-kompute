@@ -27,8 +27,6 @@ set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, se
 
 
 # Adding vulkan headers and vulkan loader
-add_library(vulkan INTERFACE)
-
 include_directories(/VULKAN_SDK/include)
 link_directories(/VULKAN_SDK/lib)
 
