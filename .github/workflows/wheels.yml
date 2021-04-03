@@ -84,7 +84,8 @@ jobs:
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_MANYLINUX_I686_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
-          echo "CIBW_SKIP=cp27-macosx_x86_64 cp27-win_amd64 cp27-win32 cp27-manylinux_x86_64 cp27-manylinux_i686" >> $GITHUB_ENV
+          echo "CIBW_SKIP=cp27-* pp*" >> $GITHUB_ENV
+          CIBW_ENVIRONMENT_COMMON="LD_LIBRARY_PATH=${PWD}/VULKAN_SDK/lib"
           echo "CIBW_ENVIRONMENT=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_LINUX=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0 -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1 -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
