@@ -12,12 +12,12 @@ jobs:
             cibw-arch: manylinux_x86_64
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_i686
-          # - runs-on: macos-latest
-          #   cibw-arch: macosx_x86_64
-          # - runs-on: macos-latest
-          #   cibw-arch: macosx_arm64
-          # - runs-on: macos-latest
-          #   cibw-arch: macosx_universal2
+          - runs-on: macos-latest
+            cibw-arch: macosx_x86_64
+          - runs-on: macos-latest
+            cibw-arch: macosx_arm64
+          - runs-on: macos-latest
+            cibw-arch: macosx_universal2
           - runs-on: windows-latest
             cibw-arch: win_amd64
           - runs-on: windows-latest
@@ -39,9 +39,17 @@ jobs:
           python-version: '3.8'
           architecture: ${{ matrix.python-arch }}
 
+        # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.8
 
+      - name: Install Vulkan Loader's Build Dependencies
+        shell: bash
+        run: |
+        case `uname -s` in
+          Linux)
+            sudo apt-get install -y ninja-build libxrandr-dev
+        esac
         
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Install Vulkan SDK
@@ -62,6 +70,7 @@ jobs:
           cmake --build . --config Release
           cmake --install .
           cd ../..
+          rm -rf VULKAN_SDK/_build
 
       - name: inside VULKAN SDK
         run: |
