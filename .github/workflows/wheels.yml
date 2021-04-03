@@ -36,7 +36,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           architecture: ${{ matrix.python-arch }}
 
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
@@ -84,8 +84,11 @@ jobs:
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_MANYLINUX_I686_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
-          echo "CIBW_SKIP=cp27-*" >> $GITHUB_ENV
           echo "CIBW_SKIP=cp27-macosx_x86_64" >> $GITHUB_ENV
+          echo "CIBW_SKIP=cp27-win_amd64" >> $GITHUB_ENV
+          echo "CIBW_SKIP=cp27-win32" >> $GITHUB_ENV
+          echo "CIBW_SKIP=cp27-manylinux_x86_64" >> $GITHUB_ENV
+          echo "CIBW_SKIP=cp27-manylinux_i686" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_LINUX=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_MACOS=$CIBW_ENVIRONMENT_COMMON MACOSX_DEPLOYMENT_TARGET=10.9 CMAKE_OSX_ARCHITECTURES=\"$CMAKE_OSX_ARCHITECTURES\"" >> $GITHUB_ENV
