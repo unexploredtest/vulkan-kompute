@@ -32,6 +32,9 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(VULKAN vulkan-1)
+    set(PYTHON_INCLUDE_DIR C:\\hostedtoolcache\\windows\\Python\\3.8.8\\x64\\include)
+    set(PYTHON_LIBRARY C:\\hostedtoolcache\\windows\\Python\\3.8.8\\x64\\libs)
+    
 else()
     set(VULKAN vulkan)
 endif()
