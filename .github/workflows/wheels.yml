@@ -46,10 +46,10 @@ jobs:
       - name: Install Vulkan Loader's Build Dependencies
         shell: bash
         run: |
-          case `uname -s` in
-            Linux)
-              sudo apt-get install -y ninja-build libxrandr-dev
-          esac
+        case `uname -s` in
+          Linux)
+            sudo apt-get install -y ninja-build libxrandr-dev
+        esac
         
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Install Vulkan SDK
