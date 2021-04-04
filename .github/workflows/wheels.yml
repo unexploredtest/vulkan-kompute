@@ -100,7 +100,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: kp-0.7.0-cp38-cp38-linux_x86_64.whl
+          file: wheelhouse/kp-0.7.0-cp38-cp38-linux_x86_64.whl
           asset_name: kp-0.7.0-cp38-cp38-linux_x86_64.whl
           tag: ${{ github.ref }}
           overwrite: true
