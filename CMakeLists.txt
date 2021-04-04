@@ -36,9 +36,6 @@ else()
     set(VULKAN vulkan)
 endif()
 
-set(Python_FIND_IMPLEMENTATIONS CPython)
-find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
-
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
     set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Enables external fmt as its current dep" FORCE)
