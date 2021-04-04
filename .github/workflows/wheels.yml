@@ -36,7 +36,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.9'
+          python-version: '3.8'
           architecture: ${{ matrix.python-arch }}
 
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
@@ -92,7 +92,7 @@ jobs:
           echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_LINUX=apt update && apt install python3-dev -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           # CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH="-DPYTHON_LIBRARY=C:\hostedtoolcache\windows\Python\3.8.8\x64\libs -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")"
-          echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release && cp C:\hostedtoolcache\windows\Python\3.9.2\x64\libs\python39.lib ." >> $GITHUB_ENV
+          echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Releas" >> $GITHUB_ENV
       
       - name: Run cibuildwheel
         run: |
