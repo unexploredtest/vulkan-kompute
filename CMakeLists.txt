@@ -25,6 +25,20 @@ option(KOMPUTE_OPT_BUILD_AS_SHARED_LIB "Whether to build kompute as shared libra
 # Build flags
 set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, see docs for full list")
 
+
+# Adding vulkan headers and vulkan loader
+include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
+link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    set(VULKAN vulkan-1)
+    set(PYTHON_INCLUDE_DIR C:\\hostedtoolcache\\windows\\Python\\3.8.8\\x64\\include)
+    set(PYTHON_LIBRARY C:\\hostedtoolcache\\windows\\Python\\3.8.8\\x64\\libs)
+    
+else()
+    set(VULKAN vulkan)
+endif()
+
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
     set(SPDLOG_FMT_EXTERNAL ON CACHE BOOL "Enables external fmt as its current dep" FORCE)
@@ -88,7 +102,8 @@ if(KOMPUTE_OPT_CODE_COVERAGE)
         ${CODECOV_DIR}html/)
 endif()
 
-# If glslang was cloned, then SPIRV/GlslangToSpv.h will be used instead of glslang/SPIRV/GlslangToSpv.h
+# If glslang is cloned, then SPIRV/GlslangToSpv.h will be used instead of glslang/SPIRV/GlslangToSpv.h
+# As after installation, SPIRV/ header files will be found in glslang/SPIRV/ , more info in #193
 if(KOMPUTE_OPT_REPO_SUBMODULE_BUILD)
         add_definitions(-DUSE_EXTERNAL_GLSLANG)
 endif()
