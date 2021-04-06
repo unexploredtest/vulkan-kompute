@@ -38,7 +38,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9'
           architecture: ${{ matrix.python-arch }}
 
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
@@ -109,6 +109,6 @@ jobs:
 
       - name: Testing matching wheels
         run: |
-          WANTED_WHEEL=$(find wheelhouse -iname *38*)
+          WANTED_WHEEL=$(find wheelhouse -iname *39*)
           pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__)"
+          python -c "import kp; print(kp.__version__ + '\n' + dir(kp))"
