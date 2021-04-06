@@ -110,5 +110,5 @@ jobs:
       - name: Testing matching wheels
         run: |
           WANTED_WHEEL=$(find wheelhouse -iname *38*)
-          pip install WANTED_WHEEL
+          pip install $WANTED_WHEEL
           python -c "import kp; print(kp.__version__)"
