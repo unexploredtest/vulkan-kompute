@@ -111,4 +111,4 @@ jobs:
         run: |
           WANTED_WHEEL=$(find wheelhouse -iname *39*)
           pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__ + '\n' + dir(kp))"
+          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
