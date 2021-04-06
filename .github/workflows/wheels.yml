@@ -75,7 +75,6 @@ jobs:
           cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
-          ls VULKAN_SDK/lib
 
       - name: Install requirements
         run: |
