@@ -63,13 +63,13 @@ jobs:
           cd VULKAN_SDK/_build
           git clone https://github.com/KhronosGroup/Vulkan-Headers.git --branch $VULKAN_VERSION
           cd Vulkan-Headers
-          cmake -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_CXX_FLAGS=${{ matrix.linux-vulkan-arch }} -DUSE32bit=${{ matrix.use-win-32 }} -DCMAKE_BUILD_TYPE=Release .
+          cmake -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_CXX_FLAGS=${{ matrix.linux-vulkan-arch }} -DLFLAGS=${{ matrix.linux-vulkan-arch }} -DUSE32bit=${{ matrix.use-win-32 }} -DCMAKE_BUILD_TYPE=Release .
           cmake --build . --config Release
           cmake --install .
           cd ..
           git clone https://github.com/KhronosGroup/Vulkan-Loader.git --branch $VULKAN_VERSION
           cd Vulkan-Loader
-          cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_CXX_FLAGS=${{ matrix.linux-vulkan-arch }} -DUSE32bit=${{ matrix.use-win-32 }} -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release . -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+          cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_CXX_FLAGS=${{ matrix.linux-vulkan-arch }} -DLFLAGS=${{ matrix.linux-vulkan-arch }} -DUSE32bit=${{ matrix.use-win-32 }} -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release . -DBUILD_WSI_WAYLAND_SUPPORT=OFF
           cmake --build . --config Release
           cmake --install .
           cd ../..
