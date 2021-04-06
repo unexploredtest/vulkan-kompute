@@ -34,10 +34,8 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(VULKAN vulkan-1)
-    unset(PYTHON_EXECUTABLE)
-    unset(PYTHON_INCLUDE_DIR)
-    set(PYTHON_LIBRARY C:/hostedtoolcache/windows/Python/3.9.2/x64/libs)
-    unset(PYTHON_VERSION_STRING)
+    find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
+    ${_pythonlibs_quiet})
     set(Python_FIND_IMPLEMENTATIONS CPython)
 else()
     set(VULKAN vulkan)
