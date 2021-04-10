@@ -1,0 +1,25 @@
+name: Wheels Test
+
+on: [push]
+
+jobs: 
+  test-wheels:
+    
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Download artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}}
+        workflow: wheels.yml
+        # Optional, the status or conclusion of a completed workflow to search for
+        # Can be one of a workflow conclusion::
+        # "failure", "success", "neutral", "cancelled", "skipped", "timed_out", "action_required"
+        # Or a workflow status:
+        # "completed", "in_progress", "queued"
+        # Default: "completed,success"
+        workflow_conclusion: success
+        commit: ${{github.event.pull_request.head.sha}}
+    - name:
+      run: ls

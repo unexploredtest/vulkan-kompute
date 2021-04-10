@@ -102,31 +102,7 @@ jobs:
         run: |
           cibuildwheel
       
-      # - name: Store artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     path: wheelhouse/*.whl
-
-      - name: Testing matching wheels
-        shell: bash
-        run: |
-          # Installing SwiftShader to use Vulkan without GPU
-          git clone https://github.com/google/swiftshader swiftshader-build
-          cmake swiftshader-build/. -Bswiftshader-build/build/
-          cmake --build swiftshader-build/build/. --parallel
-          cp -r swiftshader-build/build/Linux/ swiftshader/
-          ls swiftshader/
-          
-          case `uname -s` in
-            windows)
-              cp swiftshader/Windows/* .
-            Linux)
-              export VK_ICD_FILENAMES=swiftshader/vk_swiftshader_icd.json
-            Darwin)
-              export VK_ICD_FILENAMES=swiftshader/vk_swiftshader_icd.json
-          esac
-
-          # Finding kp wheel and testing 
-          WANTED_WHEEL=$(find wheelhouse -iname *38*)
-          pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
+      - name: Store artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: wheelhouse/*.whl
