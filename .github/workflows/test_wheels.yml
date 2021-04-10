@@ -8,6 +8,14 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
+    - name: Waiting for wheels
+      uses: lewagon/wait-on-check-action@v0.2
+      with:
+        ref: wheels-build
+        check-name: wheels # name of the existing check - omit to wait for all checks
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        wait-interval: 20 # seconds
+
     - name: Download artifact
       uses: dawidd6/action-download-artifact@v2
       with:
