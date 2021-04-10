@@ -11,8 +11,8 @@ jobs:
     - name: Waiting for wheels
       uses: lewagon/wait-on-check-action@v0.2
       with:
-        ref: wheels-build
-        check-name: Wheels # name of the existing check - omit to wait for all checks
+        ref: ${{ github.sha }}
+        check-name: wheels # name of the existing check - omit to wait for all checks
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         wait-interval: 20 # seconds
 
