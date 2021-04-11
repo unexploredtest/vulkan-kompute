@@ -13,8 +13,7 @@ jobs:
     - name: Waiting for wheels
       uses: lewagon/wait-on-check-action@v0.2
       with:
-        ref: ${{ github.sha }}
-        running-workflow-name: test_wheels
+        ref: ${{ github.ref }}
         check-name: wheels # name of the existing check - omit to wait for all checks
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         wait-interval: 20 # seconds
