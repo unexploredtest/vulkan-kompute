@@ -1,13 +1,9 @@
 name: Wheels
 
+
 on:
-  workflow_dispatch:
-    inputs:
-      delay_seconds:
-        description: "Time to delay"
-        required: false
-        default: "30"
   push:
+  workflow_dispatch:
 
 # TODO: Build wheels for 32 bit
 

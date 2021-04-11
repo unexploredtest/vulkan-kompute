@@ -1,8 +1,13 @@
 name: Wheels Test
 
 on:
-  push:
   workflow_dispatch:
+    inputs:
+      delay_seconds:
+        description: "Time to delay"
+        required: false
+        default: "30"
+  push:
 
 jobs: 
   test-wheels:
