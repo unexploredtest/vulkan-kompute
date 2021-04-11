@@ -109,9 +109,14 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: wheelhouse/*.whl
+  
+  run-test-wheels:
+    runs-on: ubuntu-18.04
 
-      - name: Triggering wheels tests
-        uses: benc-uk/workflow-dispatch@v1
-        with: 
-          workflow: Wheels Test
-          token: ${{ secrets.PERSONAL_TOKEN }}
+    steps:
+
+    - name: Triggering wheels tests
+      uses: benc-uk/workflow-dispatch@v1
+      with: 
+        workflow: Wheels Test
+        token: ${{ secrets.PERSONAL_TOKEN }}
