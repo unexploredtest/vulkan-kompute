@@ -54,6 +54,7 @@ jobs:
           esac
         
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
+        # Vulkan Kompute depends on it
       - name: Install Vulkan SDK
         shell: bash
         run: |
@@ -100,19 +101,9 @@ jobs:
       - name: Run cibuildwheel
         run: |
           cibuildwheel
-      
-      # - name: Store artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     path: wheelhouse/*.whl
 
-      - name: Testing matching wheels
-        shell: bash
-        run: |
-          case `uname -s` in
-            Windows)
-              cp -r VULKAN_SDK/lib/* .
-          esac
-          WANTED_WHEEL=$(find wheelhouse -iname *37*)
-          pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
+      - name: Store artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: wheels
+          path: wheelhouse/*.whl
