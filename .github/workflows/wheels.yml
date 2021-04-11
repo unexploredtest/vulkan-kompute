@@ -118,5 +118,5 @@ jobs:
     - name: Triggering wheels tests
       uses: benc-uk/workflow-dispatch@v1
       with: 
-        workflow: Wheels Test
         token: ${{ secrets.PERSONAL_TOKEN }}
+        workflow: Wheels Test        
