@@ -109,3 +109,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: wheelhouse/*.whl
+
+      - name: Triggering wheels tests
+        uses: benc-uk/workflow-dispatch@v1
+        with: 
+          workflow: Wheels Test
+          token: ${{ secrets.PERSONAL_TOKEN }}

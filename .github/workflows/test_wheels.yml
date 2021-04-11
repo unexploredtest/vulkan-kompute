@@ -2,12 +2,6 @@ name: Wheels Test
 
 on:
   workflow_dispatch:
-    inputs:
-      delay_seconds:
-        description: "Time to delay"
-        required: false
-        default: "30"
-  push:
 
 jobs: 
   test-wheels:
@@ -19,15 +13,6 @@ jobs:
 
     - name: check an env name
       run: echo "${{ github.ref }}"
-
-    - name: Waiting for wheels
-      uses: lewagon/wait-on-check-action@v0.2
-      with:
-        ref: ${{ github.ref }}
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        wait-interval: 20 # seconds
-        running-workflow-name: test_wheels
-        check-name: wheels # name of the existing check - omit to wait for all checks
 
     - name: Download artifact
       uses: dawidd6/action-download-artifact@v2
