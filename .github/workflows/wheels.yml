@@ -1,9 +1,6 @@
-name: Wheels
+ame: Wheels
 
-
-on:
-  push:
-  workflow_dispatch:
+on: [push]
 
 # TODO: Build wheels for 32 bit
 
@@ -77,7 +74,6 @@ jobs:
           cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
-
       - name: Install requirements
         run: |
           python -m pip install cibuildwheel twine
@@ -105,26 +101,18 @@ jobs:
         run: |
           cibuildwheel
       
-      - name: Store artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: 'wheels'
-          path: wheelhouse/*.whl
-  
-  run-test-wheels:
-    
-    needs: [wheels]
-    runs-on: ubuntu-18.04
+      # - name: Store artifacts
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     path: wheelhouse/*.whl
 
-    steps:
-    - uses: actions/checkout@v2
-
-    - uses: actions/download-artifact@v2
-      with:
-        name: 'wheels'
-        
-    - name: Display structure of downloaded files
-      run: ls -R
-
-
-       
+      - name: Testing matching wheels
+        shell: bash
+        run: |
+          case `uname -s` in
+            Windows)
+              cp -r VULKAN_SDK/lib/* .
+          esac
+          WANTED_WHEEL=$(find wheelhouse -iname *37*)
+          pip install $WANTED_WHEEL
+          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
