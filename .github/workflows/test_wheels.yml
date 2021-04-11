@@ -24,9 +24,10 @@ jobs:
       uses: lewagon/wait-on-check-action@v0.2
       with:
         ref: ${{ github.ref }}
-        check-name: wheels # name of the existing check - omit to wait for all checks
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         wait-interval: 20 # seconds
+        running-workflow-name: test_wheels
+        check-name: wheels # name of the existing check - omit to wait for all checks
 
     - name: Download artifact
       uses: dawidd6/action-download-artifact@v2
