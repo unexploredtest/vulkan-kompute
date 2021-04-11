@@ -9,7 +9,12 @@ jobs:
     
     runs-on: ubuntu-18.04
 
+
     steps:
+
+    - name: check an env name
+      run: echo "${{ github.ref }}"
+
     - name: Waiting for wheels
       uses: lewagon/wait-on-check-action@v0.2
       with:
