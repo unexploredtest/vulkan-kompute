@@ -121,7 +121,7 @@ jobs:
         submodules: recursive
 
     - name: Triggering wheels tests
-      uses: benc-uk/workflow-dispatch@v1
+      uses: benc-uk/workflow-dispatch@v1.1
       with: 
-        token: ${{ secrets.PERSONAL_TOKEN }}
-        workflow: Wheels Test        
+        workflow: Wheels Test
+        token: ${{ secrets.PERSONAL_TOKEN }}       
