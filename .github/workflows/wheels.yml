@@ -108,20 +108,22 @@ jobs:
       - name: Store artifacts
         uses: actions/upload-artifact@v2
         with:
+          name: 'wheels'
           path: wheelhouse/*.whl
   
   run-test-wheels:
+  needs: [wheels]
     runs-on: ubuntu-18.04
 
     steps:
+    - uses: actions/checkout@v2
 
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/download-artifact@v2
       with:
-        submodules: recursive
+        name: 'wheels'
+        
+    - name: Display structure of downloaded files
+      run: ls -R
 
-    - name: Triggering wheels tests
-      uses: benc-uk/workflow-dispatch@v1.1
-      with: 
-        workflow: Wheels Test
-        token: ${{ secrets.PERSONAL_TOKEN }}       
+
+       
