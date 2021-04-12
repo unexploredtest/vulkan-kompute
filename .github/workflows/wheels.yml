@@ -75,9 +75,11 @@ jobs:
           cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
+
       - name: Install requirements
         run: |
           python -m pip install cibuildwheel twine
+
       - name: Configure cibuildwheel
         shell: bash
         run: |
@@ -108,10 +110,18 @@ jobs:
       #     name: wheels
       #     path: wheelhouse/*.whl
 
+      - name: Copying vulkan-1.dll so that the wheel will find it
+        if: runner.os == 'Windows'
+        run: xcopy VULKAN_SDK\lib C:\Windows\System32
+
       - name: Testing matching wheels
         shell: bash
         run: |
           cp -r VULKAN_SDK/lib/* .
+          case `uname -s` in
+            Darwin)
+              export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+          esac
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
           python -c "import kp; print(kp.__version__, '\n', dir(kp))"
