@@ -2,7 +2,7 @@ name: Wheels
 
 on: [push]
 
-# TODO: Build wheels for 32 bit
+# TODO: Build wheels for 32 bit as well
 
 jobs: 
   wheels:
@@ -54,7 +54,7 @@ jobs:
           esac
         
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
-        # Vulkan Kompute depends on it
+        # Vulkan Kompute depends on Vulkan Loader so we will install it
       - name: Install Vulkan SDK
         shell: bash
         run: |
@@ -102,8 +102,16 @@ jobs:
         run: |
           cibuildwheel
 
-      - name: Store wheels
-        uses: actions/upload-artifact@v2
-        with:
-          name: wheels
-          path: wheelhouse/*.whl
+      # - name: Store wheels
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: wheels
+      #     path: wheelhouse/*.whl
+
+      - name: Testing matching wheels
+        shell: bash
+        run: |
+          cp -r VULKAN_SDK/lib/* .
+          WANTED_WHEEL=$(find wheelhouse -iname *37*)
+          pip install $WANTED_WHEEL
+          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
