@@ -45,6 +45,8 @@ jobs:
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.8
 
+        # Vulkan Loader needs some x11 related libraries
+        # and ninja-build to build it from source
       - name: Install Vulkan Loader's Build Dependencies
         shell: bash
         run: |
@@ -76,6 +78,8 @@ jobs:
           cd ../..
           rm -rf VULKAN_SDK/_build
 
+        # cibuildwheel is used to build wheels and
+        # twine to upload to PyPI
       - name: Install requirements
         run: |
           python -m pip install cibuildwheel twine
@@ -86,17 +90,33 @@ jobs:
           CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
           CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
           echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
+
+          # I'm not using manylinux2010 because it doesn't contain python3 libraries&headers that
+          # pybind needs in order to build vulkan kompute, also, I think manylinux2014 is old enough
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux2014" >> $GITHUB_ENV
-          # echo "CIBW_MANYLINUX_I686_IMAGE=manylinux_2_24" >> $GITHUB_ENV
+          # TODO: Make wheels for Linux i686
+          # echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
+
+          # We're gonna skip python 2.7 wbuild because Vulkan Kompute only
+          # supports python 3.5+
+          # Vulkan Kompute doesn't work on PyPI yet, but will revist this
           echo "CIBW_SKIP=cp27-* pp*" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_LINUX=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
-          CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0 -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1 -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
+
+          CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0"
+          CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1"
+          CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
+
           echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=""" >> $GITHUB_ENV
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
-          # apt update && apt install python3-dev -y && 
+
+          # To build Vulkan Kompute, we need python3 libs; i.e libpython3.6m.so ,
+          # if anyone wanted to change Manylinux image, install the corresponding
+          # libraries, for example in manylinux_2_24 we would be using:
+          # apt update && apt install python3-dev -y
           echo "CIBW_BEFORE_ALL_LINUX=yum update -y && yum install python3-devel -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release" >> $GITHUB_ENV
       
@@ -110,16 +130,24 @@ jobs:
       #     name: wheels
       #     path: wheelhouse/*.whl
 
+      # Some mistakes might occure, generally if python tests have passed,
+      # and the tests below(checking for kp functions) work, it's almost
+      # guaranteed that it'll work out
       - name: Testing matching wheels
+        if: ! '${{ matrix.cibw-arch }} == "macosx_arm64" '
+        if: ! '${{ matrix.cibw-arch }} == "macosx_universal2" '
         shell: bash
         run: |
+          # This case condition helps us specify vulkan lib
+          # path for each OS (because it's a dependency)
           case `uname -s` in
             Darwin)
               export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+            ;;
             Windows)
               cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/System32
           esac
-          export PYTHONPATH="$(pwd)/VULKAN_SDK/lib"
+
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
           python -c "import kp; print(kp.__version__, '\n', dir(kp))"
