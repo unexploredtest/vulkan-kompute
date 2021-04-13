@@ -95,7 +95,7 @@ jobs:
           CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0 -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1 -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
           echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=""" >> $GITHUB_ENV
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
-          echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          # echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           # apt update && apt install python3-dev -y && 
           echo "CIBW_BEFORE_ALL_LINUX=yum install rh-python36-python-devel -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release" >> $GITHUB_ENV
