@@ -134,7 +134,7 @@ jobs:
       # and the tests below(checking for kp functions) work, it's almost
       # guaranteed that it'll work out
       - name: Testing matching wheels
-        if: ${{ matrix.cibw-arch }} != "macosx_arm64" || ${{ matrix.cibw-arch }} != "macosx_universal2"
+        if: ${{ matrix.cibw-arch }} != "macosx_arm64" && ${{ matrix.cibw-arch }} != "macosx_universal2"
         shell: bash
         run: |
           # This case condition helps us specify vulkan lib
