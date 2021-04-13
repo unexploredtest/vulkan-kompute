@@ -141,7 +141,7 @@ jobs:
           # path for each OS (because it's a dependency)
           case `uname -s` in
             Darwin)
-              export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+              # export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
             ;;
             Windows)
               cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/System32
@@ -150,4 +150,4 @@ jobs:
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
+          python -c "import os; os.environ['PATH'] += $(pwd)/VULKAN_SDK/lib; import kp; print(kp.__version__, '\n', dir(kp))"
