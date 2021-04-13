@@ -43,6 +43,7 @@ jobs:
           architecture: ${{ matrix.python-arch }}
 
       - name: Find python
+        shell: bash
         run: |
           case `uname -s` in
             Windows)
