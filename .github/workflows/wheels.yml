@@ -113,10 +113,11 @@ jobs:
       - name: Testing matching wheels
         shell: bash
         run: |
-          cp -r VULKAN_SDK/lib/* .
           case `uname -s` in
             Darwin)
               export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+            Windows)
+              cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/System32
           esac
           export PYTHONPATH="$(pwd)/VULKAN_SDK/lib"
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
