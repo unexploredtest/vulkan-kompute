@@ -44,10 +44,6 @@ jobs:
           python-version: '3.7'
           architecture: ${{ matrix.python-arch }}
 
-      - name: Find python
-        if: matrix.runs-on == 'windows-latest'
-        run: dir C:\hostedtoolcache\windows\Python\3.7.9\x64
-
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Setup CMake
         uses: jwlawson/actions-setup-cmake@v1.8
@@ -87,7 +83,7 @@ jobs:
 
       - name: Windows
         if: matrix.runs-on == 'windows-latest'
-        run: xcopy VULKAN_SDK\bin C:\hostedtoolcache\windows\Python\3.7.9\x64\DLLs
+        run: xcopy VULKAN_SDK\bin C:\Windows\System32
 
         # cibuildwheel is used to build wheels and
         # twine to upload to PyPI
