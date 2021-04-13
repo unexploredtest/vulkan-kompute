@@ -87,7 +87,7 @@ jobs:
 
       - name: Windows
         if: matrix.runs-on == 'windows-latest'
-        run: xcopy VULKAN_SDK\lib C:\hostedtoolcache\windows\Python\3.7.9\x64\DLLs
+        run: xcopy VULKAN_SDK\bin C:\hostedtoolcache\windows\Python\3.7.9\x64\DLLs
 
         # cibuildwheel is used to build wheels and
         # twine to upload to PyPI
