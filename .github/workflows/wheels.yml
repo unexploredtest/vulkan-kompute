@@ -150,4 +150,4 @@ jobs:
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          python -c "import os; os.environ['PATH'] += $(pwd)/VULKAN_SDK/lib; import kp; print(kp.__version__, '\n', dir(kp))"
+          python -c "import os; os.environ['PATH'] += '$(pwd)/VULKAN_SDK/lib'; import kp; print(kp.__version__, '\n', dir(kp))"
