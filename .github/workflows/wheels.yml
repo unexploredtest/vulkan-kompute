@@ -43,9 +43,8 @@ jobs:
           architecture: ${{ matrix.python-arch }}
 
       - name: Find python
-        shell: bash
         run: |
-          ls /cygdrive/c/hostedtoolcache/windows/Python/3.7.9/x64
+          dir C:\hostedtoolcache\windows\Python\3.7.9\x64
 
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Setup CMake
