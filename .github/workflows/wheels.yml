@@ -98,9 +98,9 @@ jobs:
           # echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
 
-          # We're gonna skip python 2.7 wbuild because Vulkan Kompute only
+          # We're gonna skip python 2.7 builds because Vulkan Kompute only
           # supports python 3.5+
-          # Vulkan Kompute doesn't work on PyPI yet, but will revist this
+          # Vulkan Kompute doesn't work on PyPy yet, but will revist this
           echo "CIBW_SKIP=cp27-* pp*" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
           echo "CIBW_ENVIRONMENT_LINUX=$CIBW_ENVIRONMENT_COMMON" >> $GITHUB_ENV
@@ -142,6 +142,7 @@ jobs:
           case `uname -s` in
             Darwin)
               # export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+              cp -r $(pwd)/VULKAN_SDK/lib/* /Users/runner/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages
             ;;
             Windows)
               cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/System32
@@ -150,4 +151,4 @@ jobs:
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          python -c "import os; os.environ['PATH'] += '$(pwd)/VULKAN_SDK/lib'; import kp; print(kp.__version__, '\n', dir(kp))"
+          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
