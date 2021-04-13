@@ -61,10 +61,6 @@ jobs:
             Linux)
               sudo apt-get install -y ninja-build libxrandr-dev
           esac
-
-      - name: Windows
-        if: matrix.runs-on == 'windows-latest'
-        run: xcopy VULKAN_SDK\lib C:\hostedtoolcache\windows\Python\3.7.9\x64\DLLs
         
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
         # Vulkan Kompute depends on Vulkan Loader so we will install it
@@ -88,6 +84,10 @@ jobs:
           cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
+
+      - name: Windows
+        if: matrix.runs-on == 'windows-latest'
+        run: xcopy VULKAN_SDK\lib C:\hostedtoolcache\windows\Python\3.7.9\x64\DLLs
 
         # cibuildwheel is used to build wheels and
         # twine to upload to PyPI
