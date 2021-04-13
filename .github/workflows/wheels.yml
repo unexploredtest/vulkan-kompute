@@ -3,6 +3,7 @@ name: Wheels
 on: [push]
 
 # TODO: Build wheels for 32 bit as well
+# TODO: Build wheels for Linux arm64 as well 
 
 jobs: 
   wheels:
@@ -40,6 +41,13 @@ jobs:
         with:
           python-version: '3.7'
           architecture: ${{ matrix.python-arch }}
+
+      - name: Find python
+        run: |
+          case `uname -s` in
+            Windows)
+              ls /cygdrive/c/hostedtoolcache/windows/Python/3.7.9/x64
+          esac
 
         # Inspired from https://github.com/humbletim/setup-vulkan-sdk
       - name: Setup CMake
@@ -141,12 +149,10 @@ jobs:
           # path for each OS (because it's a dependency)
           case `uname -s` in
             Darwin)
-              # export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
-              cp -r $(pwd)/VULKAN_SDK/lib/* /Users/runner/hostedtoolcache/Python/3.7.10/x64/lib/python3.7/site-packages
+              export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
             ;;
             Windows)
-              cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/System32
-              cp VULKAN_SDK/lib/vulkan-1.dll /cygdrive/c/Windows/SysWOW64
+              cp -r $(pwd)/VULKAN_SDK/lib/* /cygdrive/c/Windows/System32
           esac
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
