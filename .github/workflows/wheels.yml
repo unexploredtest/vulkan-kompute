@@ -97,7 +97,7 @@ jobs:
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           # apt update && apt install python3-dev -y && 
-          echo "CIBW_BEFORE_ALL_LINUX=pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && echo $(ls /opt) && $CIBW_BEFORE_ALL_COMMON -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") -DPYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")" >> $GITHUB_ENV
+          echo "CIBW_BEFORE_ALL_LINUX=pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake &&  lol=$(ls /opt) && $CIBW_BEFORE_ALL_COMMON -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())") -DPYTHON_LIBRARY=$(python -c "import distutils.sysconfig as sysconfig; print(sysconfig.get_config_var('LIBDIR'))")" >> $GITHUB_ENV
           # CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH="-DPYTHON_LIBRARY=C:\hostedtoolcache\windows\Python\3.8.8\x64\libs -DPYTHON_INCLUDE_DIR=$(python -c "from distutils.sysconfig import get_python_inc; print(get_python_inc())")"
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release" >> $GITHUB_ENV
       
