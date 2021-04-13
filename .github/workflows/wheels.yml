@@ -114,6 +114,10 @@ jobs:
         shell: bash
         run: |
           cp -r VULKAN_SDK/lib/* .
+          case `uname -s` in
+            Darwin)
+              export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
+          esac
           export PYTHONPATH="$(pwd)/VULKAN_SDK/lib"
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL

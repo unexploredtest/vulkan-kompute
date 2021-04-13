@@ -31,16 +31,15 @@ include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 
+# Because CMake confuses the two installed python versions(one that was installed manually
+# and the other that was installed as defauult) , we're going to choose what version to use manually
+find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
+${_pythonlibs_quiet})
+set(Python_FIND_IMPLEMENTATIONS CPython)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll
     set(VULKAN vulkan-1)
-    
-    # Because CMake confuses the two installed python versions(one that was installed manually
-    # and the other that was installed as defauult) , we're going to choose what version to use manually
-    find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
-    ${_pythonlibs_quiet})
-    set(Python_FIND_IMPLEMENTATIONS CPython)
 else()
     # Vulkan Loader's library name on Linux is libvulkan.so and on Mac is libvulkan.dylib
     set(VULKAN vulkan)
