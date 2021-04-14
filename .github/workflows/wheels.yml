@@ -167,6 +167,7 @@ jobs:
           # We're testing whether the class "Manager" exists ot not
           class_exists=$(python -c "import kp; class_exists = 'Manager' in dir(kp); print(str(class_exists).lower())")
           echo "class_exists=$class_exists" >> $GITHUB_ENV
+      
       # If the class exists, then the test passes, else it'll fail
       - name: Testing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
@@ -189,6 +190,7 @@ jobs:
           name: wheels
           path: wheelhouse/*.whl
 
+          
 # This will automatically release kp to PyPI
   publish:
     
@@ -198,7 +200,7 @@ jobs:
 
     steps:
 
-      # Downloading the wheels that just got built
+      # Downloads the wheels that just got built
       - uses: actions/download-artifact@v2
         with:
           name: wheels
