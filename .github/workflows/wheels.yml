@@ -127,12 +127,6 @@ jobs:
         run: |
           cibuildwheel
 
-      # - name: Store wheels
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: wheels
-      #     path: wheelhouse/*.whl
-
       # Copying vulkan-1.dll to a place where python will find it
       - name: Copying vulkan-1.dll
         if: matrix.runs-on == 'windows-latest'
@@ -161,9 +155,15 @@ jobs:
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
         uses: nick-invision/assert-action@v1
         with:
-          expected: False
+          expected: True
           actual: ${{ env.function_exists }}
           comparison: exact
+
+      - name: Store wheels
+        uses: actions/upload-artifact@v2
+        with:
+          name: wheels
+          path: wheelhouse/*.whl
 
 
         
