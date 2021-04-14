@@ -38,6 +38,13 @@ jobs:
         with:
           submodules: recursive
 
+      - name: set success
+        if: matrix.cibw-arch != 'macosx_universal2'
+        run: echo '::error'
+
+      - name: set failure
+        run: echo '::error'
+
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -80,10 +87,6 @@ jobs:
           cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
-
-      - name: Windows
-        if: matrix.runs-on == 'windows-latest'
-        run: xcopy VULKAN_SDK\bin C:\Windows\System32
 
         # cibuildwheel is used to build wheels and
         # twine to upload to PyPI
@@ -137,10 +140,15 @@ jobs:
       #     name: wheels
       #     path: wheelhouse/*.whl
 
+      # Copying vulkan-1.dll to a place where python will find it
+      - name: Copying vulkan-1.dll
+        if: matrix.runs-on == 'windows-latest'
+        run: xcopy VULKAN_SDK\bin C:\Windows\System32
+
       # Some mistakes might occure, generally if python tests have passed,
       # and the tests below(checking for kp functions) work, it's almost
       # guaranteed that it'll work out
-      - name: Testing matching wheels
+      - name: Installing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
         shell: bash
         run: |
@@ -149,11 +157,16 @@ jobs:
           case `uname -s` in
             Darwin)
               export DYLD_LIBRARY_PATH="$(pwd)/VULKAN_SDK/lib:$DYLD_LIBRARY_PATH"
-            ;;
-            Windows)
-              cp -r $(pwd)/VULKAN_SDK/lib/* /cygdrive/c/Windows/System32
           esac
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          python -c "import kp; print(kp.__version__, '\n', dir(kp))"
+          function_exists=$(python -c "import kp; function_exists = 'Manager' in dir(kp); print(str(function_exists))")
+          echo "function_exists=$function_exists" >> $GITHUB_ENV
+
+      - name: Testing wheels
+        if: ${{ env.function_exists }} != 'True'
+        run: echo '::error'
+
+
+        
