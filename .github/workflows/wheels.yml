@@ -37,14 +37,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-
-      - name: set success
-        if: matrix.cibw-arch != 'macosx_universal2'
-        run: echo '::error'
-
-      - name: set failure
-        run: echo '::error'
-
+      
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
@@ -165,8 +158,12 @@ jobs:
           echo "function_exists=$function_exists" >> $GITHUB_ENV
 
       - name: Testing wheels
-        if: ${{ env.function_exists }} != 'True'
-        run: echo '::error'
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
+        uses: nick-invision@assert-action@v1
+        with:
+          expected: False
+          actual: ${{ env.function_exists }}
+          comparison: exact
 
 
         
