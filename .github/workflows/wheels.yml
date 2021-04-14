@@ -1,6 +1,8 @@
 name: wheels
 
-on: [release]
+on:
+  release:
+    types: [published]
 
 # TODO: Build wheels for 32 bit as well
 # TODO: Build wheels for Linux arm64 as well
