@@ -140,8 +140,7 @@ jobs:
 
       # Some mistakes might occure, generally if python tests have passed,
       # and the tests below(checking for kp functions) work, it's almost
-      # guaranteed that it'll work out
-      - name: Installing wheels
+      # guaranteed that it'llnick-invision@assert-action@v1s
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
         shell: bash
         run: |
@@ -159,7 +158,7 @@ jobs:
 
       - name: Testing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
-        uses: nick-invision@assert-action@v1
+        uses: nick-invision/assert-action@v1
         with:
           expected: False
           actual: ${{ env.function_exists }}
