@@ -117,7 +117,7 @@ jobs:
           # they haven't installed vulkan drivers at all, which is of course not going to work
           echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=""" >> $GITHUB_ENV
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
-          
+
           echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
 
           # To build Vulkan Kompute, we need python3 libs; i.e libpython3.6m.so ,
@@ -137,7 +137,7 @@ jobs:
         run: xcopy VULKAN_SDK\bin C:\Windows\System32
 
       # Some mistakes might occure, generally if python tests have passed,
-      # and the tests below(checking for kp functions) work, it's almost
+      # and the tests below(checking for kp classes) work, it's almost
       # guaranteed that it'llnick-invision@assert-action@v1s
       - name: Installing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
@@ -152,16 +152,18 @@ jobs:
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          function_exists=$(python -c "import kp; function_exists = 'Manager' in dir(kp); print(str(function_exists).lower())")
-          echo "function_exists=$function_exists" >> $GITHUB_ENV
+          
+          # We're testing whether the class "Manager" exists ot not
+          class_exists=$(python -c "import kp; class_exists = 'Manager' in dir(kp); print(str(class_exists).lower())")
+          echo "class_exists=$class_exists" >> $GITHUB_ENV
 
-      # If the function exists, then the test passes, else it'll fail
+      # If the class exists, then the test passes, else it'll fail
       - name: Testing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
         uses: nick-invision/assert-action@v1
         with:
           expected: True
-          actual: ${{ env.function_exists }}
+          actual: ${{ env.class_exists }}
           comparison: exact
 
       # Because we didn't use auditwheel, we have to change
@@ -175,6 +177,3 @@ jobs:
         with:
           name: wheels
           path: wheelhouse/*.whl
-
-
-        
