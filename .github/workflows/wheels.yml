@@ -148,7 +148,7 @@ jobs:
 
           WANTED_WHEEL=$(find wheelhouse -iname *37*)
           pip install $WANTED_WHEEL
-          function_exists=$(python -c "import kp; function_exists = 'Manager' in dir(kp); print(str(function_exists))")
+          function_exists=$(python -c "import kp; function_exists = 'Manager' in dir(kp); print(str(function_exists).lower())")
           echo "function_exists=$function_exists" >> $GITHUB_ENV
 
       - name: Testing wheels
