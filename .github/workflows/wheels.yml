@@ -141,6 +141,7 @@ jobs:
       # Some mistakes might occure, generally if python tests have passed,
       # and the tests below(checking for kp functions) work, it's almost
       # guaranteed that it'llnick-invision@assert-action@v1s
+      - name: Installing wheels
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
         shell: bash
         run: |
