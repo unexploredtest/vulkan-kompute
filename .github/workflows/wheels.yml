@@ -5,7 +5,7 @@ on: [push]
 # TODO: Build wheels for 32 bit as well
 # TODO: Build wheels for Linux arm64 as well
 # Note: MacOS ARM builds are experiemental and there is no 
-# guarantee that it'll work out
+# guarantee that it'll work out, also, we won't test them
 
 jobs: 
   wheels:
@@ -112,8 +112,12 @@ jobs:
           CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1"
           CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
 
+          # We're not going to repair wheels, the reason is that we do not want to include vulkan libs
+          # into the wheel, as it SHOULD exist by default on a machine which has vulkan, otherwise
+          # they haven't installed vulkan drivers at all, which is of course not going to work
           echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=""" >> $GITHUB_ENV
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
+          
           echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
 
           # To build Vulkan Kompute, we need python3 libs; i.e libpython3.6m.so ,
@@ -136,7 +140,7 @@ jobs:
       # and the tests below(checking for kp functions) work, it's almost
       # guaranteed that it'llnick-invision@assert-action@v1s
       - name: Installing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
         shell: bash
         run: |
           # This case condition helps us specify vulkan lib
@@ -151,13 +155,20 @@ jobs:
           function_exists=$(python -c "import kp; function_exists = 'Manager' in dir(kp); print(str(function_exists).lower())")
           echo "function_exists=$function_exists" >> $GITHUB_ENV
 
+      # If the function exists, then the test passes, else it'll fail
       - name: Testing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
         uses: nick-invision/assert-action@v1
         with:
           expected: True
           actual: ${{ env.function_exists }}
           comparison: exact
+
+      # Because we didn't use auditwheel, we have to change
+      # linux to manylinux manually
+      - name: Changing Linux wheel names
+        shell: bash
+        run: for filename in wheelhouse/*.whl; do mv "$filename" "${filename//linux/manylinux2014}"; done
 
       - name: Store wheels
         uses: actions/upload-artifact@v2
