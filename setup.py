@@ -69,8 +69,8 @@ class CMakeBuild(build_ext):
         subprocess.check_call(['cmake', '--build', '.'] + build_args, cwd=self.build_temp)
 
 setup(
-    name='kp',
-    version='0.7.0',
+    name='kp-release',
+    version='0.7.1',
     author='Alejandro Saucedo',
     description='Vulkan Kompute: Blazing fast, mobile-enabled, asynchronous, and optimized for advanced GPU processing usecases.',
     long_description=long_description,
