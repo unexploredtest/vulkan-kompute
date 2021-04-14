@@ -175,7 +175,7 @@ jobs:
         if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
         uses: nick-invision/assert-action@v1
         with:
-          expected: True
+          expected: true
           actual: ${{ env.class_exists }}
           comparison: exact
 
