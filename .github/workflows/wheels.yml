@@ -3,7 +3,7 @@ name: wheels
 on: [push]
 
 
-# TODO: Build wheels for 32 bit as well
+# TODO: Build wheels for win32 bit as well
 # TODO: Build wheels for Linux arm64 as well
 # Note: MacOS ARM builds are experiemental and there is no 
 # guarantee that it'll work out, also, we can't test them
@@ -25,7 +25,6 @@ jobs:
             cibw-arch: manylinux_i686
             python-version: 3.8
             vulkan-extra-arguemnts: -DCMAKE_C_FLAGS=-m32
-            python-arch: x86
 
           - runs-on: macos-latest
             cibw-arch: macosx_x86_64
@@ -115,7 +114,6 @@ jobs:
           # I'm not using manylinux2010 because it doesn't contain python3 libraries&headers that
           # pybind needs in order to build vulkan kompute, also, I think manylinux2014 is old enough
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux2014" >> $GITHUB_ENV
-          # TODO: Make wheels for Linux i686
           echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
           # We're gonna skip python 2.7 builds because Vulkan Kompute only
@@ -153,7 +151,7 @@ jobs:
       # and the tests below(checking for kp classes) work, it's almost
       # guaranteed that it'llnick-invision@assert-action@v1s
       - name: Installing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'  && matrix.cibw-arch != 'manylinux_i686' # MacOS Arm is not going to be tested
         shell: bash
         run: |
           # This case condition helps us specify vulkan lib
@@ -173,7 +171,7 @@ jobs:
       
       # If the class exists, then the test passes, else it'll fail
       - name: Testing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' # MacOS Arm is not going to be tested
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' && matrix.cibw-arch != 'manylinux_i686' # MacOS Arm is not going to be tested
         uses: nick-invision/assert-action@v1
         with:
           expected: true
