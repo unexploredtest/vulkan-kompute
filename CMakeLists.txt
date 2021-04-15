@@ -42,8 +42,8 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll
     set(VULKAN vulkan-1)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-    add_library(vulkan INTERFACE)
-    set(VULKAN vulkan)
+    find_package(Vulkan REQUIRED)
+    set(VULKAN Vulkan::Vulkan)
 else()
     # Adding vulkan headers and vulkan loader that got built
     include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
