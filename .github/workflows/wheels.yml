@@ -147,7 +147,7 @@ jobs:
           # if anyone wanted to change Manylinux image, install the corresponding
           # libraries, for example in manylinux_2_24 we would be using:
           # apt update && apt install python3-dev -y
-          LINUX_INSTALL_DEPENDENCY=${{ matrix.cibw-arch == 'manylinux_aarch64' && 'apt update && apt install python3-dev libvulkan-dev -y' || 'yum update -y && yum install python3-devel' }}
+          LINUX_INSTALL_DEPENDENCY="${{ matrix.cibw-arch == 'manylinux_aarch64' && 'apt update && apt install python3-dev libvulkan-dev -y' || 'yum update -y && yum install python3-devel' }}"
           echo "CIBW_BEFORE_ALL_LINUX=$LINUX_INSTALL_DEPENDENCY && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release" >> $GITHUB_ENV
       
