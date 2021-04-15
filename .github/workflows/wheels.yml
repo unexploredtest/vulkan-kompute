@@ -125,7 +125,7 @@ jobs:
           # I'm not using manylinux2010 because it doesn't contain python3 libraries&headers that
           # pybind needs in order to build vulkan kompute, also, I think manylinux2014 is old enough
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux2014" >> $GITHUB_ENV
-          echo "CIBW_MANYLINUX_AARCH64_IMAGE=manylinux2014" >> $GITHUB_ENV
+          echo "CIBW_MANYLINUX_AARCH64_IMAGE=manylinux_2_24" >> $GITHUB_ENV
           echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
           # We're gonna skip python 2.7 builds because Vulkan Kompute only
@@ -147,7 +147,8 @@ jobs:
           # if anyone wanted to change Manylinux image, install the corresponding
           # libraries, for example in manylinux_2_24 we would be using:
           # apt update && apt install python3-dev -y
-          echo "CIBW_BEFORE_ALL_LINUX=yum update -y && yum install python3-devel vulkan-devel -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          LINUX_INSTALL_DEPENDENCY=${{ matrix.cibw-arch == 'manylinux_aarch64' && 'apt update && apt install python3-dev libvulkan-dev -y' || 'yum update -y && yum install python3-devel' }}
+          echo "CIBW_BEFORE_ALL_LINUX=$LINUX_INSTALL_DEPENDENCY && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON $CIBW_BEFORE_ALL_WINDOWS_PYTHON_PATH --config Release" >> $GITHUB_ENV
       
       - name: Run cibuildwheel
