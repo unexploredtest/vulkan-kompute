@@ -1,6 +1,6 @@
 name: wheels
 
-on: [release]
+on: [push]
 
 # TODO: Build wheels for 32 bit as well
 # TODO: Build wheels for Linux arm64 as well
@@ -20,9 +20,10 @@ jobs:
             cibw-arch: manylinux_x86_64
             python-version: 3.8
 
-          # - runs-on: ubuntu-latest
-          #   cibw-arch: manylinux_i686
-          #   python-version: 3.8
+          - runs-on: ubuntu-latest
+            cibw-arch: manylinux_i686
+            python-version: 3.8
+            vulkan-extra-arguemnts: -DCMAKE_C_FLAGS=-m32
 
           - runs-on: macos-latest
             cibw-arch: macosx_x86_64
@@ -71,7 +72,7 @@ jobs:
         run: |
           case `uname -s` in
             Linux)
-              sudo apt-get install -y ninja-build libxrandr-dev
+              sudo apt-get install -y ninja-build libxrandr-dev gcc-multilib g++-multilib
           esac
         
       # Inspired from https://github.com/humbletim/setup-vulkan-sdk
@@ -85,13 +86,13 @@ jobs:
           cd VULKAN_SDK/_build
           git clone https://github.com/KhronosGroup/Vulkan-Headers.git --branch $VULKAN_VERSION
           cd Vulkan-Headers
-          cmake -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release .
+          cmake -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release ${{ matrix.vulkan-extra-arguemnts }} . 
           cmake --build . --config Release
           cmake --install .
           cd ..
           git clone https://github.com/KhronosGroup/Vulkan-Loader.git --branch $VULKAN_VERSION
           cd Vulkan-Loader
-          cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release . -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+          cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release ${{ matrix.vulkan-extra-arguemnts }} . -DBUILD_WSI_WAYLAND_SUPPORT=OFF
           cmake --build . --config Release
           cmake --install .
           cd ../..
@@ -113,7 +114,7 @@ jobs:
           # pybind needs in order to build vulkan kompute, also, I think manylinux2014 is old enough
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux2014" >> $GITHUB_ENV
           # TODO: Make wheels for Linux i686
-          # echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
+          echo "CIBW_MANYLINUX_I686_IMAGE=manylinux2014" >> $GITHUB_ENV
           echo "CIBW_BUILD=*-${{ matrix.cibw-arch }}" >> $GITHUB_ENV
           # We're gonna skip python 2.7 builds because Vulkan Kompute only
           # supports python 3.5+
