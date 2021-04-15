@@ -121,6 +121,7 @@ jobs:
           CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
           CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
           echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
+          echo "CIBW_ARCHS_LINUX=x86_64 aarch64 i686" >> $GITHUB_EN
           # I'm not using manylinux2010 because it doesn't contain python3 libraries&headers that
           # pybind needs in order to build vulkan kompute, also, I think manylinux2014 is old enough
           echo "CIBW_MANYLINUX_X86_64_IMAGE=manylinux2014" >> $GITHUB_ENV
