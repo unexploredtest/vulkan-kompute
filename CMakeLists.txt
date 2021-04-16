@@ -26,7 +26,9 @@ option(KOMPUTE_OPT_BUILD_AS_SHARED_LIB "Whether to build kompute as shared libra
 set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, see docs for full list")
 
 
-
+# Adding vulkan headers and vulkan loader that got built
+include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
+link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 
 # Because CMake confuses the two installed python versions(one that was installed manually
