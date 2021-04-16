@@ -1,8 +1,8 @@
 
-![GitHub](https://img.shields.io/badge/Version-0.5.2-green.svg)
+![GitHub](https://img.shields.io/badge/Version-0.7.0-green.svg)
 ![GitHub](https://img.shields.io/badge/C++-14—20-purple.svg)
 ![GitHub](https://img.shields.io/badge/Build-cmake-red.svg)
-![GitHub](https://img.shields.io/badge/Python-3.5—3.8-blue.svg)
+![GitHub](https://img.shields.io/badge/Python-3.5—3.9-blue.svg)
 ![GitHub](https://img.shields.io/badge/License-Apache-black.svg)
 
 <table>
@@ -24,7 +24,7 @@
 
 <h4>Blazing fast, mobile-enabled, asynchronous, and optimized for advanced GPU processing usecases.</h4>
 
-🔋 [Documentation](https://kompute.cc) 💻 [Blog Post](https://medium.com/@AxSaucedo/machine-learning-and-data-processing-in-the-gpu-with-vulkan-kompute-c9350e5e5d3a) ⌨ [Examples](#more-examples) 💾
+💬 [Join the Discord for Questions / Chat](https://discord.gg/ywjaBH6v24) 🔋 [Documentation](https://kompute.cc) 💻 [Blog Post](https://medium.com/@AxSaucedo/machine-learning-and-data-processing-in-the-gpu-with-vulkan-kompute-c9350e5e5d3a) ⌨ [Examples](#more-examples) 💾
 
 
 ## Principles & Features
@@ -42,6 +42,8 @@
 ## Getting Started
 
 Below you can find a GPU multiplication example using the C++ and Python Kompute interfaces.
+
+You can [join the Discord](https://discord.gg/ywjaBH6v24) for questions/discussion, open a [github issue](https://github.com/EthicalML/vulkan-kompute/issues/new), or read [the documentation](https://kompute.cc/).
 
 ### Your First Kompute (C++)
 
@@ -72,7 +74,7 @@ void kompute(const std::string& shader) {
     kp::Constants pushConstsB({ 3.0 });
 
     auto algorithm = mgr.algorithm(params,
-                                   kp::Shader::compile_source(shader),
+                                   kp::Shader::compileSource(shader),
                                    workgroup,
                                    specConsts,
                                    pushConstsA);
@@ -86,7 +88,7 @@ void kompute(const std::string& shader) {
         ->eval(); // Evaluates only last recorded operation
 
     // 5. Sync results from the GPU asynchronously
-    sq = mgr.sequence()
+    auto sq = mgr.sequence();
     sq->evalAsync<kp::OpTensorSyncLocal>(params);
 
     // ... Do other work asynchronously whilst GPU finishes
@@ -94,9 +96,9 @@ void kompute(const std::string& shader) {
     sq->evalAwait();
 
     // Prints the first output which is: { 4, 8, 12 }
-    for (const float& elem : tensorOutA->data()) std::cout << elem << "  ";
+    for (const float& elem : tensorOutA->vector()) std::cout << elem << "  ";
     // Prints the second output which is: { 10, 10, 10 }
-    for (const float& elem : tensorOutB->data()) std::cout << elem << "  ";
+    for (const float& elem : tensorOutB->vector()) std::cout << elem << "  ";
 
 } // Manages / releases all CPU and GPU memory resources
 
