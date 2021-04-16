@@ -21,6 +21,7 @@ jobs:
             cibw-arch: manylinux_x86_64
             python-version: 3.8
 
+            # aarch64 can take a long time
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_i686
             python-version: 3.8
