@@ -36,21 +36,13 @@ ${_pythonlibs_quiet})
 set(Python_FIND_IMPLEMENTATIONS CPython)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    # Adding vulkan headers and vulkan loader that got built
-    include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
-    link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
     # Vulkan Loader's name on Windows is vulkan-1.dll
     set(VULKAN vulkan-1)
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND ${CMAKE_SYSTEM_PROCESSOR} MATCHES "^arm")
-    find_package(Vulkan REQUIRED)
-    set(VULKAN Vulkan::Vulkan)
 else()
-    # Adding vulkan headers and vulkan loader that got built
-    include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
-    link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
     # Vulkan Loader's library name on Linux is libvulkan.so and on Mac is libvulkan.dylib
     set(VULKAN vulkan)
 endif()
+
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
     set(KOMPUTE_EXTRA_CXX_FLAGS "${KOMPUTE_EXTRA_CXX_FLAGS} -DKOMPUTE_ENABLE_SPDLOG=1")
