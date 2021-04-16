@@ -25,11 +25,13 @@ jobs:
             cibw-arch: manylinux_i686
             python-version: 3.8
             vulkan-extra-arguemnts: -DCMAKE_C_FLAGS=-m32
+            extra-apt-dependency: gcc-multilib g++-multilib
             
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_aarch64
             python-version: 3.8
             vulkan-extra-arguemnts: -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc  -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
+            extra-apt-dependency: gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
           - runs-on: macos-latest
             cibw-arch: macosx_x86_64
@@ -78,7 +80,7 @@ jobs:
         run: |
           case `uname -s` in
             Linux)
-              sudo apt-get install -y ninja-build libxrandr-dev gcc-multilib g++-multilib gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+              sudo apt-get install -y ninja-build libxrandr-dev gcc g++ ${{ matrix.extra-apt-dependency }}
           esac
         
       # Inspired from https://github.com/humbletim/setup-vulkan-sdk
@@ -163,7 +165,7 @@ jobs:
       # and the tests below(checking for kp classes) work, it's almost
       # guaranteed that it'llnick-invision@assert-action@v1s
       - name: Installing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'  && matrix.cibw-arch != 'manylinux_i686' # MacOS Arm is not going to be tested
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2'  && matrix.cibw-arch != 'manylinux_i686' && matrix.cibw-arch != 'manylinux_aarch64'
         shell: bash
         run: |
           # This case condition helps us specify vulkan lib
@@ -182,7 +184,7 @@ jobs:
       
       # If the class exists, then the test passes, else it'll fail
       - name: Testing wheels
-        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' && matrix.cibw-arch != 'manylinux_i686' # MacOS Arm is not going to be tested
+        if: matrix.cibw-arch != 'macosx_arm64' && matrix.cibw-arch != 'macosx_universal2' && matrix.cibw-arch != 'manylinux_i686' && matrix.cibw-arch != 'manylinux_aarch64'
         uses: nick-invision/assert-action@v1
         with:
           expected: true
