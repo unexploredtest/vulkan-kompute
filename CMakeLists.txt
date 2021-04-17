@@ -41,8 +41,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     set(VULKAN vulkan-1)
     find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
     ${_pythonlibs_quiet})
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND ${CMAKE_SYSTEM_PROCESSOR} MATCHES "^arm")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(VULKAN vulkan)
+    find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 else()
     # Vulkan Loader's library name on Linux is libvulkan.so and on Mac is libvulkan.dylib
     set(VULKAN vulkan)
