@@ -193,7 +193,5 @@ endif()
 
 if(KOMPUTE_OPT_BUILD_PYTHON)
     include_directories(${PROJECT_SOURCE_DIR}/python/pybind11/include)
-    find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
-             ${_pythonlibs_quiet})
     include_directories(${PYTHON_INCLUDE_DIRS})
 endif()
