@@ -192,6 +192,7 @@ if(KOMPUTE_OPT_INSTALL)
 endif()
 
 if(KOMPUTE_OPT_BUILD_PYTHON)
-    include_directories(${PYTHON_INCLUDE_DIRS})
     include_directories(${PROJECT_SOURCE_DIR}/python/pybind11/include)
+    find_package(PythonLibs REQUIRED)
+    include_directories(${PYTHON_INCLUDE_DIRS})
 endif()

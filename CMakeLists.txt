@@ -38,8 +38,6 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
              ${_pythonlibs_quiet})
-set(PYTHON_INCLUDE_DIRS "${PYTHON_INCLUDE_DIR}")
-include_directories(${PYTHON_INCLUDE_DIRS})
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll

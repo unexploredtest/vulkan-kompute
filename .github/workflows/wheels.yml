@@ -18,40 +18,40 @@ jobs:
         include:
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_x86_64
-            python-version: 3.8
+            python-version: 3.7
 
             # aarch64 can take a long time
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_i686
-            python-version: 3.8
+            python-version: 3.7
             vulkan-extra-arguemnts: -DCMAKE_C_FLAGS=-m32
             extra-apt-dependency: gcc-multilib g++-multilib
             
           - runs-on: ubuntu-latest
             cibw-arch: manylinux_aarch64
-            python-version: 3.8
+            python-version: 3.7
             vulkan-extra-arguemnts: -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc  -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++
             extra-apt-dependency: gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
           - runs-on: macos-latest
             cibw-arch: macosx_x86_64
-            python-version: 3.8
+            python-version: 3.7
 
           - runs-on: macos-latest
             cibw-arch: macosx_arm64
-            python-version: 3.9
+            python-version: 3.7
 
           - runs-on: macos-latest
             cibw-arch: macosx_universal2
-            python-version: 3.9
+            python-version: 3.7
 
           - runs-on: windows-latest
             cibw-arch: win_amd64
-            python-version: 3.8
+            python-version: 3.7
 
           - runs-on: windows-latest
             cibw-arch: win32
-            python-version: 3.8
+            python-version: 3.7
             python-arch: x86
             vulkan-extra-arguemnts: -A Win32
 
