@@ -36,7 +36,7 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 # find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
 # ${_pythonlibs_quiet})
 
-ffind_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
+find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
              ${_pythonlibs_quiet})
 # include_directories(${PYTHON_INCLUDE_DIRS})
 
