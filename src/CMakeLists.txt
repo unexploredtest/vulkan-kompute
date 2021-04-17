@@ -192,5 +192,6 @@ if(KOMPUTE_OPT_INSTALL)
 endif()
 
 if(KOMPUTE_OPT_BUILD_PYTHON)
+    find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
     include_directories(${PROJECT_SOURCE_DIR}/python/pybind11/include)
 endif()
