@@ -1,8 +1,3 @@
-
-unset(PYTHON_EXECUTABLE)
-unset(PYTHON_INCLUDE_DIR)
-unset(PYTHON_LIBRARY)
-unset(PYTHON_VERSION_STRING)
 set(Python_FIND_IMPLEMENTATIONS CPython)
 find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
 add_subdirectory(pybind11)
