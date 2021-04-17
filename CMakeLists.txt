@@ -36,7 +36,8 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 # find_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
 # ${_pythonlibs_quiet})
 
-find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
+ffind_package(PythonInterp ${PythonLibsNew_FIND_VERSION} ${_pythonlibs_required}
+             ${_pythonlibs_quiet})
 # include_directories(${PYTHON_INCLUDE_DIRS})
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
