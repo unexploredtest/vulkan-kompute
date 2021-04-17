@@ -1,7 +1,4 @@
-set(Python_FIND_IMPLEMENTATIONS CPython)
-find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
-set(PYBIND11_NOPYTHON OFF)
-add_definitions(-DPYBIND11_NOPYTHON=OFF)
+
 add_subdirectory(pybind11)
 
 pybind11_add_module(kp src/main.cpp)
