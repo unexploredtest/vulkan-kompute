@@ -4,10 +4,10 @@ on: [push]
 
 
 # TODO: Build wheels for win32 bit as well
-# Note: MacOS ARM builds are experiemental and there is no 
-# guarantee that it'll work out, also, we can't test them
-# TODO: Add official support to MacOS ARM once github adds
+# TODO: Add support for MacOS ARM once github adds
 # Mac OS ARM as a runner and cibuildwheel officially support it
+
+
 
 jobs: 
   wheels:
@@ -151,7 +151,7 @@ jobs:
           # if anyone wanted to change Manylinux image, install the corresponding
           # libraries, for example in manylinux_2_24 we would be using:
           # apt update && apt install python3-dev -y
-          echo "CIBW_BEFORE_ALL_LINUX=yum install python3-devel && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          echo "CIBW_BEFORE_ALL_LINUX=yum install python3-devel -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON --config Release" >> $GITHUB_ENV
       
       - name: Run cibuildwheel
