@@ -49,11 +49,11 @@ jobs:
             cibw-arch: win_amd64
             python-version: 3.8
 
-          #- runs-on: windows-latest
-            #cibw-arch: win32
-            #python-version: 3.8
-            #python-arch: x86
-            #vulkan-extra-arguemnts: -A Win32
+          - runs-on: windows-latest
+            cibw-arch: win32
+            python-version: 3.8
+            python-arch: x86
+            vulkan-extra-arguemnts: -A Win32
 
     name: Wheels • ${{ matrix.cibw-arch }}
     runs-on: ${{ matrix.runs-on }}
