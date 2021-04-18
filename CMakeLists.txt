@@ -26,14 +26,13 @@ option(KOMPUTE_OPT_BUILD_AS_SHARED_LIB "Whether to build kompute as shared libra
 set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, see docs for full list")
 
 
+################### WHEELS ###################
+
 # Adding vulkan headers and vulkan loader that got built
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
-
-############### WHEELS ###############
-
-# Okay, so there is a problem with how python is found, and in order for us
+# Okay, so there is a problem with how python is found(below for more details), and in order for us
 # to find Python interpreted and libs correctly, I used a workaround, I will
 # try to fix the problem but for now, this shall do (even though there will be limitations)
 find_package(PythonInterp REQUIRED)
@@ -48,7 +47,14 @@ else()
     set(VULKAN vulkan)
 endif()
 
-############### WHEELS ###############
+
+# There is an issue with us finding python, we should be using
+# the python that cibuildwheel offers, but because it doesn't contain
+# inludes dirs and libraries, we have to get one ourselves from the
+# said images this has inroduced some limitations, like having to
+# use manylinux2014 and not being able to build wheels for Mac ARM
+
+################### WHEELS ###################
 
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)
