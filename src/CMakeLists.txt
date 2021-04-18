@@ -193,6 +193,7 @@ endif()
 
 if(KOMPUTE_OPT_BUILD_PYTHON)
     include_directories(${PROJECT_SOURCE_DIR}/python/pybind11/include)
+    include_directories(${PYTHON_INCLUDE_DIRS})
     message(STATUS "Secondary python:")
     message(STATUS "${PYTHON_INCLUDE_DIRS_VAR}")
 endif()
