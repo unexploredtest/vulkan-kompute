@@ -31,11 +31,15 @@ include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
 
-# Because CMake confuses the two installed python versions(one that was installed manually
-# and the other that was installed as defauult) , we're going to choose what version to use manually
+############### WHEELS ###############
+
+# Okay, so there is a problem with how python is found, and in order for us
+# to find Python interpreted and libs correctly, I used a workaround, I will
+# try to fix the problem but for now, this shall do (even though there will be limitations)
 find_package(PythonInterp REQUIRED)
 set(Python_FIND_IMPLEMENTATIONS CPython)
 
+# Names of vulkan lib differes based on OS
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll
     set(VULKAN vulkan-1)
@@ -43,6 +47,8 @@ else()
     # Vulkan Loader's library name on Linux is libvulkan.so and on Mac is libvulkan.dylib
     set(VULKAN vulkan)
 endif()
+
+############### WHEELS ###############
 
 
 if(KOMPUTE_OPT_ENABLE_SPDLOG)

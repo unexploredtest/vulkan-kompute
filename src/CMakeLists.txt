@@ -55,7 +55,7 @@ target_include_directories(
 if(NOT KOMPUTE_OPT_ANDOID_BUILD)
     target_link_libraries(
         kompute
-        ${VULKAN}
+        ${VULKAN}    # Manually selected Vulkan  
     )
 else()
     target_link_libraries(
@@ -63,6 +63,7 @@ else()
     )
 endif()
 
+# For wheels, we have already specifies Vulkan Headers and Vulkan libs, so this won't work
 #if(KOMPUTE_OPT_REPO_SUBMODULE_BUILD)
 # Override the default Vulkan::Vulkan headers
 # In this case we only use the build interface due to https://github.com/KhronosGroup/Vulkan-Headers/issues/157
