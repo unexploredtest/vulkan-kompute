@@ -37,23 +37,23 @@ jobs:
             cibw-arch: macosx_x86_64
             python-version: 3.7
 
-          #- runs-on: macos-latest
-            #cibw-arch: macosx_arm64
-            #python-version: 3.7
+          - runs-on: macos-latest
+            cibw-arch: macosx_arm64
+            python-version: 3.7
 
-          #- runs-on: macos-latest
-            #cibw-arch: macosx_universal2
-            #python-version: 3.7
+          - runs-on: macos-latest
+            cibw-arch: macosx_universal2
+            python-version: 3.7
 
           - runs-on: windows-latest
             cibw-arch: win_amd64
             python-version: 3.7
 
-          #- runs-on: windows-latest
-            #cibw-arch: win32
-            #python-version: 3.7
-            #python-arch: x86
-            #vulkan-extra-arguemnts: -A Win32
+          - runs-on: windows-latest
+            cibw-arch: win32
+            python-version: 3.7
+            python-arch: x86
+            vulkan-extra-arguemnts: -A Win32
 
     name: Wheels • ${{ matrix.cibw-arch }}
     runs-on: ${{ matrix.runs-on }}
@@ -151,7 +151,7 @@ jobs:
           # if anyone wanted to change Manylinux image, install the corresponding
           # libraries, for example in manylinux_2_24 we would be using:
           # apt update && apt install python3-dev -y
-          echo "CIBW_BEFORE_ALL_LINUX=yum install python3-devel -y && pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          echo "CIBW_BEFORE_ALL_LINUX=pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON --config Release" >> $GITHUB_ENV
       
       - name: Run cibuildwheel
