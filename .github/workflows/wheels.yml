@@ -2,7 +2,7 @@ name: wheels
 
 on:
   release:
-    types: [publishes]
+    types: [published]
 
 
 # TODO: Build wheels for win32 and MacOS ARM as well
