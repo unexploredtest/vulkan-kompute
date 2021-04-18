@@ -34,6 +34,7 @@ link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 # Because CMake confuses the two installed python versions(one that was installed manually
 # and the other that was installed as defauult) , we're going to choose what version to use manually
 set(Python_FIND_IMPLEMENTATIONS CPython)
+find_package (Python COMPONENTS Interpreter Development)
 find_package(PythonLibs REQUIRED)
 set(PYTHON_INCLUDE_DIRS_VAR ${PYTHON_INCLUDE_DIRS})
 message(STATUS "Original python:")
