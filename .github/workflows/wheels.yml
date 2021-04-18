@@ -1,6 +1,8 @@
 name: wheels
 
-on: [push]
+on:
+  release:
+    types: [published]
 
 
 # TODO: Build wheels for win32 and MacOS ARM as well
@@ -65,11 +67,11 @@ jobs:
             cibw-arch: win_amd64
             python-version: 3.8
 
-          - runs-on: windows-latest
-            cibw-arch: win32
-            python-version: 3.7
-            python-arch: x86
-            vulkan-extra-arguemnts: -A Win32
+          #- runs-on: windows-latest
+            #cibw-arch: win32
+            #python-version: 3.7
+            #python-arch: x86
+            #vulkan-extra-arguemnts: -A Win32
 
     name: Wheels • ${{ matrix.cibw-arch }}
     runs-on: ${{ matrix.runs-on }}
@@ -144,11 +146,11 @@ jobs:
         shell: bash
         run: |
           # These settings are for disabled builds
-          # Telling cibuildwheel to build kp for win32 
-          CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
-          # Telling cibuildwheel what architecture to build kp for in Mac OS
-          CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
-          echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
+          # # Telling cibuildwheel to build kp for win32 
+          # CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
+          # # Telling cibuildwheel what architecture to build kp for in Mac OS
+          # CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
+          # echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
 
           
           # Telling cibuildwheel what architecture to build kp for in Linux
@@ -242,22 +244,22 @@ jobs:
 
           
 # This will automatically release kp to PyPI
-  #publish:
+  publish:
     
-    #name: Publish Wheels
-    #runs-on: ubuntu-latest
-    #needs: [wheels]
+    name: Publish Wheels
+    runs-on: ubuntu-latest
+    needs: [wheels]
 
-    #steps:
+    steps:
 
-      # # Downloads the wheels that just got built
-      #- uses: actions/download-artifact@v2
-        #with:
-          #name: wheels
-          #path: dist
+      # Downloads the wheels that just got built
+      - uses: actions/download-artifact@v2
+        with:
+          name: wheels
+          path: dist
 
-      #- name: Publish packages to PyPI
-        #uses: pypa/gh-action-pypi-publish@release/v1
-        #with:
-          #user: __token__
-          #password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Publish packages to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
