@@ -144,11 +144,11 @@ jobs:
         shell: bash
         run: |
           # These settings are for disabled builds
-          # # Telling cibuildwheel to build kp for win32 
-          # CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
-          # # Telling cibuildwheel what architecture to build kp for in Mac OS
-          # CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
-          # echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
+          # Telling cibuildwheel to build kp for win32 
+          CMAKE_ARCH="${{ matrix.cibw-arch == 'win32' && '-A Win32' || '' }}"
+          # Telling cibuildwheel what architecture to build kp for in Mac OS
+          CMAKE_OSX_ARCHITECTURES=${{ matrix.cibw-arch == 'macosx_x86_64' && 'x86_64' || matrix.cibw-arch == 'macosx_arm64' && 'arm64' || matrix.cibw-arch == 'macosx_universal2' && '"arm64;x86_64"' || '' }}
+          echo "CIBW_ARCHS_MACOS=x86_64 arm64 universal2" >> $GITHUB_ENV
 
           
           # Telling cibuildwheel what architecture to build kp for in Linux
