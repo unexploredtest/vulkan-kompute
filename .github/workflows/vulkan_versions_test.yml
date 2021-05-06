@@ -65,7 +65,7 @@ jobs:
           cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release   \
               . -DBUILD_WSI_WAYLAND_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF
           cmake --build . --config Release
-          sudo cmake --install .
+          sudo make install
           cd ../..
           rm -rf VULKAN_SDK/_build
 
