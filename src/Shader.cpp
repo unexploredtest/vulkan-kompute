@@ -198,7 +198,7 @@ const TBuiltInResource Shader::defaultResource = {
     /* .maxTaskWorkGroupSizeY_NV = */ 1,
     /* .maxTaskWorkGroupSizeZ_NV = */ 1,
     /* .maxMeshViewCountNV = */ 4,
-    /* .maxDualSourceDrawBuffersEXT = */ 1,
+    /* .maxDualSourceDrawBuffersEXT = */       // 1,
 
     /* .limits = */
     {
