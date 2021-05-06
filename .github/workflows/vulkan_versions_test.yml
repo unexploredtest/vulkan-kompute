@@ -75,6 +75,6 @@ jobs:
                 -DCMAKE_BUILD_TYPE=Debug               \
                 -DKOMPUTE_OPT_ENABLE_SPDLOG=1
 
-        - name: Building Vulkan Kompute
-          run: |
-            cd build && make -j 2
+      - name: Building Vulkan Kompute
+        run: |
+          cd build && make -j 2
