@@ -41,8 +41,8 @@ jobs:
       - name: Install Vulkan Kompute's Dependencies
         run: |
           sudo add-apt-repository ppa:deadsnakes/ppa
-          sudo apt update
-          sudo apt install python3.6
+          sudo apt update -y
+          sudo apt install -y python3.6
 
           sudo apt update -y
           sudo apt install -y cmake
