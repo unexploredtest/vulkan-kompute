@@ -71,8 +71,9 @@ jobs:
 
       - name: Configuring Vulkan Kompute
         run: |
-          cmake -Bbuild/                               \
-                -DCMAKE_BUILD_TYPE=Debug               \
+          cmake -Bbuild/                                  \
+                -DCMAKE_BUILD_TYPE=Debug                  \
+                -DCMAKE_PREFIX_PATH=$(pwd)/VULKAN_SDK     \
                 -DKOMPUTE_OPT_ENABLE_SPDLOG=1
 
       - name: Building Vulkan Kompute
