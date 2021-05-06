@@ -65,9 +65,16 @@ jobs:
           cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release   \
               . -DBUILD_WSI_WAYLAND_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF
           cmake --build . --config Release
-          sudo make install
+          cmake --install .
           cd ../..
           rm -rf VULKAN_SDK/_build
 
-      - name:
-        run: ls -R
+        - name: Configuring Vulkan Kompute
+          run: |
+            cmake -Bbuild/                               \
+                  -DCMAKE_BUILD_TYPE=Debug               \
+                  -DKOMPUTE_OPT_ENABLE_SPDLOG=1
+
+        - name: Building Vulkan Kompute
+          run: |
+            cd build && make -j 2
