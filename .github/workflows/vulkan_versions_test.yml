@@ -16,17 +16,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        
-          - vulkan-version: sdk-1.2.170
+
+          - vulkan-version: sdk-1.1.77
           - vulkan-version: v1.1.115
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
-          # - vulkan-version: ubuntu-latest
+          - vulkan-version: sdk-1.2.131
+          - vulkan-version: sdk-1.2.154
+          - vulkan-version: sdk-1.2.176
+          # - vulkan-version:
+          # - vulkan-version:
+          # - vulkan-version:
+          # - vulkan-version:
+          # - vulkan-version:
 
 
     name: Vulkan • ${{ matrix.vulkan-version }}
@@ -73,7 +73,7 @@ jobs:
         run: |
           cmake -Bbuild/                                  \
                 -DCMAKE_BUILD_TYPE=Debug                  \
-                -DCMAKE_PREFIX_PATH=$(pwd)/VULKAN_SDK     \
+                -DCMAKE_PREFIX_PATH=VULKAN_SDK            \
                 -DKOMPUTE_OPT_ENABLE_SPDLOG=1
 
       - name: Building Vulkan Kompute
