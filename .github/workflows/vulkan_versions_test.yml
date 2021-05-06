@@ -40,10 +40,15 @@ jobs:
 
       - name: Install Vulkan Kompute's Dependencies
         run: |
+          sudo apt remove -y python3
+          sudo add-apt-repository ppa:deadsnakes/ppa
+          sudo apt update
+          sudo apt install python3.6
+
           sudo apt update -y
           sudo apt install -y cmake
           sudo apt install -y g++
-          sudo apt install -y python2
+          sudo apt install -y python3
           sudo apt install -y libfmt-dev -y
           sudo apt install -y libspdlog-dev -y
           sudo apt install -y glslang-dev -y
