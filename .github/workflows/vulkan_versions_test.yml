@@ -50,7 +50,7 @@ jobs:
 
       - name: Building custom Vulkan
         run: |
-          VULKAN_VERSION=sdk-1.2.162
+          VULKAN_VERSION=${{ matrix.vulkan-version }}
           mkdir VULKAN_SDK
           mkdir VULKAN_SDK/_build
           cd VULKAN_SDK/_build
@@ -73,7 +73,7 @@ jobs:
         run: |
           cmake -Bbuild/                                  \
                 -DCMAKE_BUILD_TYPE=Debug                  \
-                -DCMAKE_PREFIX_PATH=VULKAN_SDK            \
+                -DCMAKE_PREFIX_PATH=$(pwd)/VULKAN_SDK     \
                 -DKOMPUTE_OPT_ENABLE_SPDLOG=1
 
       - name: Building Vulkan Kompute
