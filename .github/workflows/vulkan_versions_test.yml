@@ -67,7 +67,7 @@ jobs:
           git clone https://github.com/KhronosGroup/Vulkan-Loader.git --branch $VULKAN_VERSION
           cd Vulkan-Loader
           cmake -DVULKAN_HEADERS_INSTALL_DIR=../.. -DCMAKE_INSTALL_PREFIX=../.. -DCMAKE_BUILD_TYPE=Release   \
-              . -DBUILD_WSI_WAYLAND_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF -DPYTHON_EXECUTABLE=python3.6
+              . -DBUILD_WSI_WAYLAND_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF -DPYTHON_EXECUTABLE=$(which python3.6)
           cmake --build . --config Release
           cmake --install .
           cd ../..
