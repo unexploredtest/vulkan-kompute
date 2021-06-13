@@ -32,6 +32,9 @@ set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, se
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
+STATUS(MESSAGE "python is")
+STATUS(MESSAGE ${PYTHON_INCLUDE_DIR})
+
 # Names of vulkan lib differes based on OS
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll
