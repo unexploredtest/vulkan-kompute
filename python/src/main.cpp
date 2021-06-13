@@ -95,18 +95,17 @@ PYBIND11_MODULE(kp, m) {
     py::class_<kp::Tensor, std::shared_ptr<kp::Tensor>>(m, "Tensor", DOC(kp, Tensor))
         .def("data", [](kp::Tensor& self) {
                 // Non-owning container exposing the underlying pointer
-                py::str dummyDataOwner; // Explicitly request data to not be owned by np
                 switch (self.dataType()) {
                 case kp::Tensor::TensorDataTypes::eFloat:
-                    return py::array(self.size(), self.data<float>(), dummyDataOwner);
+                    return py::array(self.size(), self.data<float>(), py::cast(&self));
                 case kp::Tensor::TensorDataTypes::eUnsignedInt:
-                    return py::array(self.size(), self.data<uint32_t>(), dummyDataOwner);
+                    return py::array(self.size(), self.data<uint32_t>(), py::cast(&self));
                 case kp::Tensor::TensorDataTypes::eInt:
-                    return py::array(self.size(), self.data<int32_t>(), dummyDataOwner);
+                    return py::array(self.size(), self.data<int32_t>(), py::cast(&self));
                 case kp::Tensor::TensorDataTypes::eDouble:
-                    return py::array(self.size(), self.data<double>(), dummyDataOwner);
+                    return py::array(self.size(), self.data<double>(), py::cast(&self));
                 case kp::Tensor::TensorDataTypes::eBool:
-                    return py::array(self.size(), self.data<bool>(), dummyDataOwner);
+                    return py::array(self.size(), self.data<bool>(), py::cast(&self));
                 default:
                     throw std::runtime_error("Kompute Python data type not supported");
                 }
@@ -156,6 +155,8 @@ PYBIND11_MODULE(kp, m) {
                 py::arg("device") = 0,
                 py::arg("family_queue_indices") = std::vector<uint32_t>(),
                 py::arg("desired_extensions") = std::vector<std::string>())
+        .def("destroy", &kp::Manager::destroy,
+                DOC(kp, Manager, destroy))
         .def("sequence", &kp::Manager::sequence, DOC(kp, Manager, sequence),
                 py::arg("queue_index") = 0, py::arg("total_timestamps") = 0)
         .def("tensor", [np](kp::Manager& self,
@@ -234,6 +235,13 @@ PYBIND11_MODULE(kp, m) {
             return kp::py::vkPropertiesToDict(properties);
         }, "Return a dict containing information about the device");
 
+    auto atexit = py::module_::import("atexit");
+    atexit.attr("register")(py::cpp_function([](){
+        kp_debug = py::none();
+        kp_info = py::none();
+        kp_warning = py::none();
+        kp_error = py::none();
+    }));
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;
@@ -241,3 +249,4 @@ PYBIND11_MODULE(kp, m) {
     m.attr("__version__") = "dev";
 #endif
 }
+

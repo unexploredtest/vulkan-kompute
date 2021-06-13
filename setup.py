@@ -1,7 +1,8 @@
 import os
 import re
-import sys
 import platform
+import sys
+import sysconfig
 import subprocess
 
 from setuptools import setup, Extension
@@ -43,7 +44,10 @@ class CMakeBuild(build_ext):
                       '-DKOMPUTE_OPT_BUILD_PYTHON=1',
                       '-DKOMPUTE_OPT_ENABLE_SPDLOG=0',
                       '-DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1',
-                      '-DPYTHON_EXECUTABLE=' + sys.executable]
+                      '-DPYTHON_EXECUTABLE=' + sys.executable,
+                      '-DPYTHON_INCLUDE_DIR=' + sysconfig.get_path('include'),
+                      '-DPYTHON_LIBRARY=' + sysconfig.get_path('stdlib'),
+        ]
 
         cfg = 'Debug' if self.debug else 'Release'
         build_args = ['--config', cfg]
@@ -72,7 +76,7 @@ setup(
     name='kp',
     version='0.7.0',
     author='Alejandro Saucedo',
-    description='Vulkan Kompute: Blazing fast, mobile-enabled, asynchronous, and optimized for advanced GPU processing usecases.',
+    description='Kompute: Blazing fast, mobile-enabled, asynchronous, and optimized for advanced GPU processing usecases.',
     long_description=long_description,
     long_description_content_type='text/markdown',
     ext_modules=[CMakeExtension('kp')],

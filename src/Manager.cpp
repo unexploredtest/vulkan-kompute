@@ -145,8 +145,8 @@ Manager::createInstance()
     this->mFreeInstance = true;
 
     vk::ApplicationInfo applicationInfo;
-    applicationInfo.pApplicationName = "Vulkan Kompute";
-    applicationInfo.pEngineName = "VulkanKompute";
+    applicationInfo.pApplicationName = "Kompute";
+    applicationInfo.pEngineName = "Kompute";
     applicationInfo.apiVersion = KOMPUTE_VK_API_VERSION;
     applicationInfo.engineVersion = KOMPUTE_VK_API_VERSION;
     applicationInfo.applicationVersion = KOMPUTE_VK_API_VERSION;
@@ -320,7 +320,7 @@ Manager::createDevice(const std::vector<uint32_t>& familyQueueIndices,
 
     KP_LOG_INFO("Using physical device index {} found {}",
                 physicalDeviceIndex,
-                physicalDeviceProperties.deviceName.data());
+                physicalDeviceProperties.deviceName);
 
     if (!familyQueueIndices.size()) {
         // Find compute queue
@@ -378,8 +378,7 @@ Manager::createDevice(const std::vector<uint32_t>& familyQueueIndices,
 
     std::set<std::string> uniqueExtensionNames;
     for (const vk::ExtensionProperties& ext : deviceExtensions) {
-        std::string extName(ext.extensionName.data());
-        uniqueExtensionNames.insert(extName);
+        uniqueExtensionNames.insert(ext.extensionName);
     }
     KP_LOG_DEBUG("Kompute Manager available extensions {}",
                  uniqueExtensionNames);
