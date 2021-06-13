@@ -32,12 +32,6 @@ set(KOMPUTE_EXTRA_CXX_FLAGS "" CACHE STRING "Extra compile flags for Kompute, se
 include_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/include)
 link_directories(${CMAKE_SOURCE_DIR}/VULKAN_SDK/lib)
 
-# Okay, so there is a problem with how python is found(below for more details), and in order for us
-# to find Python interpreted and libs correctly, I used a workaround, I will
-# try to fix the problem but for now, this shall do (even though there will be limitations)
-find_package(PythonInterp REQUIRED)
-set(Python_FIND_IMPLEMENTATIONS CPython)
-
 # Names of vulkan lib differes based on OS
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     # Vulkan Loader's name on Windows is vulkan-1.dll
