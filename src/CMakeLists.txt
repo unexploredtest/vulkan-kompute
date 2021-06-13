@@ -194,6 +194,7 @@ endif()
 
 if(KOMPUTE_OPT_BUILD_PYTHON)
     include_directories(${PROJECT_SOURCE_DIR}/python/pybind11/include)
-    STATUS(MESSAGE ${PYTHON_INCLUDE_DIR})
+    MESSAGE(STATUS "python is")
+    MESSAGE(STATUS ${PYTHON_INCLUDE_DIR})
     include_directories(${PYTHON_INCLUDE_DIR})
 endif()
