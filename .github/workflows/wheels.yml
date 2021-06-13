@@ -162,21 +162,21 @@ jobs:
           # Vulkan Kompute doesn't work on PyPy yet (but will revisit this), so we're gonna exclude them
           echo "CIBW_SKIP=cp27-* pp*" >> $GITHUB_ENV
           # Telling cibuildwheel how to build kp (specifying options)
-          CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0"
-          CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1"
-          CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
+          #CIBW_BEFORE_ALL_COMMON="cmake -S . -B build_dependencies -DCMAKE_BUILD_TYPE=Release -DKOMPUTE_OPT_INSTALL=1 -DKOMPUTE_OPT_ENABLE_SPDLOG=0"
+          #CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DKOMPUTE_OPT_BUILD_PYTHON=1"
+          #CIBW_BEFORE_ALL_COMMON="$CIBW_BEFORE_ALL_COMMON -DKOMPUTE_OPT_REPO_SUBMODULE_BUILD=1 $CMAKE_ARCH && cmake --build build_dependencies -j 2"
           # We're not going to repair wheels, the reason is that we do not want to include vulkan libs
           # into wheels, as it SHOULD exist by default on a machine which has vulkan, otherwise
           # they haven't installed vulkan drivers at all, which is of course not going to work
           echo "CIBW_REPAIR_WHEEL_COMMAND_LINUX=""" >> $GITHUB_ENV
           echo "CIBW_REPAIR_WHEEL_COMMAND_MACOS=""" >> $GITHUB_ENV
-          echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          #echo "CIBW_BEFORE_ALL=$CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
           # To build Vulkan Kompute, we need python3 libs; i.e libpython3.6m.so ,
           # if anyone wanted to change Manylinux image, install the corresponding
           # libraries, for example in manylinux_2_24 we would be using:
           # apt update && apt install python3-dev -y
-          echo "CIBW_BEFORE_ALL_LINUX=pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
-          echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON --config Release" >> $GITHUB_ENV
+          #echo "CIBW_BEFORE_ALL_LINUX=pip install cmake && ln -fs \$(which cmake) /usr/local/bin/cmake && $CIBW_BEFORE_ALL_COMMON" >> $GITHUB_ENV
+          #echo "CIBW_BEFORE_ALL_WINDOWS=$CIBW_BEFORE_ALL_COMMON --config Release" >> $GITHUB_ENV
       
       - name: Run cibuildwheel
         run: |
